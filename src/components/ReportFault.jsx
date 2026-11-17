@@ -1,5 +1,75 @@
 
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+
 export default function ReportFault() {
+    const navigate = useNavigate()
+
+    const [formData, setFormData] = useState({
+        fullName: '',
+        title: '',
+        category: '',
+        location: '',
+        description: ''
+    })
+
+    const [error, setError] = useState('')
+    const [submitting, setSubmitting] = useState(false)
+
+    function handleChange(event) {
+        const { name, value } = event.target
+
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+    }
+
+    async function handleSubmit(event) {
+        event.preventDefault()
+        setError('')
+        setSubmitting(true)
+
+        const referenceNumber = `FT-${Date.now()}`
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    referenceNumber,
+                    status: 'Pending',
+                    createdAt: new Date().toISOString()
+                })
+            })
+
+            if (!response.ok) {
+                throw new Error('Failed to submit fault report')
+            }
+
+            await response.json()
+
+            setFormData({
+                fullName: '',
+                title: '',
+                category: '',
+                location: '',
+                description: ''
+            })
+
+            navigate(`/track/${referenceNumber}`)
+
+        } catch (error) {
+            console.error('Report submission error:', error)
+            setError('Unable to submit your report. Please try again.')
+        } finally {
+            setSubmitting(false)
+        }
+    }
+
     return (
         <section id="report-form" className="report-section">
             <div className="row g-0 align-items-stretch">
@@ -17,43 +87,87 @@ export default function ReportFault() {
                         <h2>Report a Fault</h2>
                         <p>Help us keep shared facilities working properly.</p>
 
-                        <form>
+                        <form onSubmit={handleSubmit}>
+
                             <div className="mb-3">
                                 <label className="form-label">Full Name</label>
-                                <input type="text" className="form-control" />
+                                <input
+                                    type="text"
+                                    name="fullName"
+                                    className="form-control"
+                                    value={formData.fullName}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </div>
 
                             <div className="mb-3">
                                 <label className="form-label">Fault Title</label>
-                                <input type="text" className="form-control" />
+                                <input
+                                    type="text"
+                                    name="title"
+                                    className="form-control"
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </div>
 
                             <div className="mb-3">
                                 <label className="form-label">Category</label>
-                                <select className="form-select">
+                                <select
+                                    name="category"
+                                    className="form-select"
+                                    value={formData.category}
+                                    onChange={handleChange}
+                                    required
+                                >
                                     <option value="">Select category</option>
-                                    <option>Computer</option>
-                                    <option>Keyboard</option>
-                                    <option>Mouse</option>
-                                    <option>Internet</option>
-                                    <option>Projector</option>
-                                    <option>Other</option>
+                                    <option value="Computer">Computer</option>
+                                    <option value="Keyboard">Keyboard</option>
+                                    <option value="Mouse">Mouse</option>
+                                    <option value="Internet">Internet</option>
+                                    <option value="Projector">Projector</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
 
                             <div className="mb-3">
                                 <label className="form-label">Location or Equipment ID</label>
-                                <input type="text" className="form-control" />
+                                <input
+                                    type="text"
+                                    name="location"
+                                    className="form-control"
+                                    value={formData.location}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </div>
 
                             <div className="mb-3">
                                 <label className="form-label">Fault Description</label>
-                                <textarea className="form-control" rows="4"></textarea>
+                                <textarea
+                                    name="description"
+                                    className="form-control"
+                                    rows="4"
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                    required
+                                ></textarea>
                             </div>
 
-                            <button type="submit" className="btn btn-primary w-100">
-                                Submit Report
+                            {error && (
+                                <p className="text-danger">{error}</p>
+                            )}
+
+                            <button
+                                type="submit"
+                                className="btn btn-primary w-100"
+                                disabled={submitting}
+                            >
+                                {submitting ? 'Submitting...' : 'Submit Report'}
                             </button>
+
                         </form>
                     </div>
                 </div>

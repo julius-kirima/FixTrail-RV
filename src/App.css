@@ -1,3 +1,4 @@
+
 .hero-section {
     width: 100%;
     height: calc(100vh - 50px);
@@ -15,6 +16,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: brightness(55%);
 }
 
 #fixTrailCarousel .carousel-caption {
@@ -30,13 +32,32 @@
     color: white;
 }
 
-#fixTrailCarousel .carousel-caption h2 {
-    font-size: 2.5rem;
+#fixTrailCarousel .carousel-caption h1 {
+    font-size: 2.8rem;
     font-weight: 700;
+    margin-bottom: 15px;
+}
+
+#fixTrailCarousel .carousel-caption h2 {
+    font-size: 2rem;
+    font-weight: 600;
 }
 
 #fixTrailCarousel .carousel-caption p {
+    max-width: 700px;
+    margin: 15px auto 25px;
     font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.hero-buttons .btn {
+    padding: 12px 25px;
 }
 
 html {
@@ -50,7 +71,7 @@ html {
 
 #home,
 #report-form,
-#reports {
+#track-progress {
     scroll-margin-top: 70px;
 }
 
@@ -102,6 +123,29 @@ html {
     .report-form-container {
         padding: 25px 15px;
     }
+
+    #fixTrailCarousel .carousel-caption {
+        width: 85%;
+        padding: 15px;
+    }
+
+    #fixTrailCarousel .carousel-caption h1 {
+        font-size: 1.8rem;
+    }
+
+    #fixTrailCarousel .carousel-caption h2 {
+        font-size: 1.3rem;
+    }
+
+    #fixTrailCarousel .carousel-caption p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .hero-buttons {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
 }
 
 .track-progress-section {
@@ -127,4 +171,206 @@ html {
 .track-progress-form .form-control,
 .track-progress-form .btn {
     padding: 12px;
+}
+
+.footer-section {
+    padding: 50px 0 20px;
+    background: #212529;
+    color: #ffffff;
+}
+
+.footer-section p {
+    color: #adb5bd;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #adb5bd;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+}
+
+.footer-section hr {
+    border-color: #6c757d;
+    margin: 25px 0;
+}
+
+@media (max-width: 767px) {
+    .report-image {
+        min-height: 300px;
+        max-height: 350px;
+    }
+}
+
+
+/* ABOUT */
+
+.about-section {
+    padding: 80px 5%;
+    background: #ffffff;
+}
+
+.about-section h2 {
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    color: #6c757d;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.about-image {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+    .about-section {
+        padding: 50px 15px;
+    }
+
+    .about-image {
+        margin-top: 25px;
+        height: 250px;
+    }
+}
+
+
+/* HOWITWORKS */
+
+
+.how-it-works-section {
+    padding: 80px 5%;
+    background: #f5f6f8;
+}
+
+.how-it-works-section h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.how-it-works-section .text-center p {
+    color: #6c757d;
+}
+
+.process-card {
+    height: 100%;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.process-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0d6efd;
+    margin-bottom: 15px;
+}
+
+.process-card h4 {
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.process-card p {
+    color: #6c757d;
+    line-height: 1.7;
+}
+
+
+
+/* WHY CHOOSE FIX TRAIL */
+
+
+.why-choose-section {
+    padding: 80px 5%;
+    background: #ffffff;
+}
+
+.why-choose-section h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.why-choose-section .text-center p {
+    color: #6c757d;
+}
+
+.benefit-card {
+    height: 100%;
+    padding: 30px;
+    background: #f5f6f8;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.benefit-card h4 {
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.benefit-card p {
+    color: #6c757d;
+    line-height: 1.7;
+}
+
+
+/* HEADER NAVLINKS */
+
+
+.navbar {
+    padding: 15px 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.navbar-nav {
+    gap: 8px;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff;
+    font-weight: 500;
+    padding: 8px 12px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+    color: #0d6efd;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 991px) {
+    .navbar-nav {
+        padding: 12px 0;
+        gap: 0;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 10px 0;
+    }
 }

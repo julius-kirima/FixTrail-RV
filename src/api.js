@@ -1,0 +1,1 @@
+export const API_URL = 'https://fixtrail-api.onrender.com/fault_reports'
