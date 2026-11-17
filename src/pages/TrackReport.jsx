@@ -19,7 +19,7 @@ export default function TrackReport() {
                 setReport(null)
 
                 const response = await fetch(
-                    `${API_URL}/fault_reports?referenceNumber=${encodeURIComponent(referenceNumber)}`
+                    `${API_URL}?referenceNumber=${encodeURIComponent(referenceNumber)}`
                 )
 
                 if (!response.ok) {

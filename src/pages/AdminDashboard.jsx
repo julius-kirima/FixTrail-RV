@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { API_URL } from '../api'
-import { API_URL } from '../api'
+
 
 export default function AdminDashboard() {
     const [reports, setReports] = useState([])
