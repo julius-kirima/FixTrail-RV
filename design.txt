@@ -1,0 +1,33 @@
+FixTrail Design Plan
+
+FixTrail will have two main interfaces:
+
+1. Public Landing Page
+- Home section with an image carousel introducing FixTrail.
+- Report Fault section with a form for submitting facility problems.
+- Track Progress section where users enter a reference number to check repair status.
+- Footer with company information and navigation links.
+2. Admin Dashboard
+- View all submitted fault reports.
+- View report details.
+- Update repair statuses.
+- Manage reported faults.
+Design Goal: A simple, user-friendly system that makes reporting facility problems and tracking repairs easy, while giving administrators control over maintenance requests.
+
+EXAMPLE DATABASE 
+
+
+CREATE TABLE IF NOT EXISTS fault_reports (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullName TEXT NOT NULL,
+    title TEXT NOT NULL,
+    category TEXT NOT NULL,
+    location TEXT NOT NULL,
+    description TEXT NOT NULL,
+    referenceNumber TEXT NOT NULL UNIQUE,
+    status TEXT NOT NULL DEFAULT 'Pending',
+    createdAt TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_fault_reports_reference
+ON fault_reports(referenceNumber);
