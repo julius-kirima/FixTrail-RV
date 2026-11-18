@@ -9,4 +9,7 @@ export default defineConfig({
       '/fault_reports': 'http://localhost:3000',
     },
   },
+  preview: {
+    allowedHosts: ['fixtrail-rv-production-bfabf3c6.up.railway.app'],
+  },
 })
