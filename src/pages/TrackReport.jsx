@@ -1,49 +1,31 @@
 
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router'
 import Header from '../components/Header'
-import { API_URL } from '../api'
+import { AppContext } from '../context/AppContext'
 
 export default function TrackReport() {
     const { referenceNumber } = useParams()
+    const { reports, loading } = useContext(AppContext)
 
     const [report, setReport] = useState(null)
-    const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
 
     useEffect(() => {
-        async function fetchReport() {
-            try {
-                setLoading(true)
-                setError('')
-                setReport(null)
+        if (loading) return
 
-                const response = await fetch(
-                    `${API_URL}?referenceNumber=${encodeURIComponent(referenceNumber)}`
-                )
+        const foundReport = reports.find(
+            (item) => item.referenceNumber === referenceNumber
+        )
 
-                if (!response.ok) {
-                    throw new Error('Failed to retrieve report')
-                }
-
-                const data = await response.json()
-
-                if (data.length === 0) {
-                    setError('No report found with this reference number.')
-                } else {
-                    setReport(data[0])
-                }
-
-            } catch (error) {
-                console.error('Report retrieval error:', error)
-                setError('Unable to retrieve your report. Please try again.')
-            } finally {
-                setLoading(false)
-            }
+        if (foundReport) {
+            setReport(foundReport)
+            setError('')
+        } else {
+            setReport(null)
+            setError('No report found with this reference number.')
         }
-
-        fetchReport()
-    }, [referenceNumber])
+    }, [reports, loading, referenceNumber])
 
     return (
         <>

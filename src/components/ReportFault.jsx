@@ -1,10 +1,11 @@
 
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { API_URL } from '../api'
+import { AppContext } from '../context/AppContext'
 
 export default function ReportFault() {
     const navigate = useNavigate()
+    const { addReport } = useContext(AppContext)
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -34,24 +35,12 @@ export default function ReportFault() {
         const referenceNumber = `FT-${Date.now()}`
 
         try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    referenceNumber,
-                    status: 'Pending',
-                    createdAt: new Date().toISOString()
-                })
+            await addReport({
+                ...formData,
+                referenceNumber,
+                status: 'Pending',
+                createdAt: new Date().toISOString()
             })
-
-            if (!response.ok) {
-                throw new Error('Failed to submit fault report')
-            }
-
-            await response.json()
 
             setFormData({
                 fullName: '',
@@ -62,7 +51,6 @@ export default function ReportFault() {
             })
 
             navigate(`/track/${referenceNumber}`)
-
         } catch (error) {
             console.error('Report submission error:', error)
             setError('Unable to submit your report. Please try again.')
@@ -74,7 +62,6 @@ export default function ReportFault() {
     return (
         <section id="report-form" className="report-section">
             <div className="row g-0 align-items-stretch">
-
                 <div className="col-md-6">
                     <img
                         src="https://images.unsplash.com/photo-1581092921461-eab62e97a780"
@@ -89,7 +76,6 @@ export default function ReportFault() {
                         <p>Help us keep shared facilities working properly.</p>
 
                         <form onSubmit={handleSubmit}>
-
                             <div className="mb-3">
                                 <label className="form-label">Full Name</label>
                                 <input
@@ -168,11 +154,9 @@ export default function ReportFault() {
                             >
                                 {submitting ? 'Submitting...' : 'Submit Report'}
                             </button>
-
                         </form>
                     </div>
                 </div>
-
             </div>
         </section>
     )

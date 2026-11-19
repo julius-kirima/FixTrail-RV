@@ -1,71 +1,40 @@
 
-import { useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router'
-import { API_URL } from '../api'
-
+import { AppContext } from '../context/AppContext'
 
 export default function AdminDashboard() {
-    const [reports, setReports] = useState([])
-    const [loading, setLoading] = useState(true)
+    const {
+        reports,
+        loading,
+        fetchReports,
+        updateStatus,
+        deleteReport
+    } = useContext(AppContext)
+
     const [error, setError] = useState('')
 
-    
-
-    async function fetchReports() {
+    async function handleRefresh() {
         try {
-            setLoading(true)
             setError('')
-
-            const response = await fetch(API_URL)
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch reports')
-            }
-
-            const data = await response.json()
-            setReports(data)
-
+            await fetchReports()
         } catch (error) {
             console.error('Fetch reports error:', error)
             setError('Unable to load fault reports. Please try again.')
-        } finally {
-            setLoading(false)
         }
     }
 
-    useEffect(() => {
-        fetchReports()
-    }, [])
-
-    async function updateStatus(id, status) {
+    async function handleStatusChange(id, status) {
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ status })
-            })
-
-            if (!response.ok) {
-                throw new Error('Failed to update report status')
-            }
-
-            const updatedReport = await response.json()
-
-            setReports((previousReports) =>
-                previousReports.map((report) =>
-                    report.id === id ? updatedReport : report
-                )
-            )
-
+            setError('')
+            await updateStatus(id, status)
         } catch (error) {
             console.error('Update status error:', error)
             setError('Unable to update the report status.')
         }
     }
 
-    async function deleteReport(id) {
+    async function handleDelete(id) {
         const confirmed = window.confirm(
             'Are you sure you want to delete this fault report?'
         )
@@ -73,18 +42,8 @@ export default function AdminDashboard() {
         if (!confirmed) return
 
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
-                method: 'DELETE'
-            })
-
-            if (!response.ok) {
-                throw new Error('Failed to delete report')
-            }
-
-            setReports((previousReports) =>
-                previousReports.filter((report) => report.id !== id)
-            )
-
+            setError('')
+            await deleteReport(id)
         } catch (error) {
             console.error('Delete report error:', error)
             setError('Unable to delete the report.')
@@ -113,7 +72,7 @@ export default function AdminDashboard() {
 
                     <button
                         className="btn btn-primary"
-                        onClick={fetchReports}
+                        onClick={handleRefresh}
                     >
                         Refresh Reports
                     </button>
@@ -168,7 +127,7 @@ export default function AdminDashboard() {
                                             className="form-select"
                                             value={report.status}
                                             onChange={(event) =>
-                                                updateStatus(
+                                                handleStatusChange(
                                                     report.id,
                                                     event.target.value
                                                 )
@@ -183,7 +142,7 @@ export default function AdminDashboard() {
                                     <td>
                                         <button
                                             className="btn btn-danger btn-sm"
-                                            onClick={() => deleteReport(report.id)}
+                                            onClick={() => handleDelete(report.id)}
                                         >
                                             Delete
                                         </button>
