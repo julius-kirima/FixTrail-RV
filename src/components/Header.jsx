@@ -11,6 +11,7 @@ export default function Header() {
                         FixTrail
                     </Link>
 
+                    {/* Bootstrap handles the mobile navigation menu. */}
                     <button
                         className="navbar-toggler"
                         type="button"
