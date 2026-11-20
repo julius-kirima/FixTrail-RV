@@ -18,6 +18,7 @@ export default function Footer() {
                     <div className="col-md-6 mb-4">
                         <h5>Quick Links</h5>
 
+                        {/* Keeps the main website sections accessible from the footer. */}
                         <ul className="footer-links">
                             <li>
                                 <Link to="/#home" reloadDocument>Home</Link>
