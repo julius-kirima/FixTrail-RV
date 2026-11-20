@@ -13,6 +13,7 @@ export default function LandingPage() {
         <div className="landing-page">
             <Header />
 
+            {/* Renders the landing page sections in their intended order. */}
             <main>
                 <Home />
                 <About />
