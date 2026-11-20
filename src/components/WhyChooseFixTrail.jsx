@@ -8,6 +8,7 @@ export default function WhyChooseFixTrail() {
                     <p>A better way to report and manage facility repairs.</p>
                 </div>
 
+                {/* Highlights the main benefits of using the platform. */}
                 <div className="row g-4">
 
                     <div className="col-md-4">
