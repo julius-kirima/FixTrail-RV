@@ -8,6 +8,7 @@ export default function HowItWorks() {
                     <p>Three simple steps to get facility problems resolved.</p>
                 </div>
 
+                {/* Explains the reporting process from submission to resolution. */}
                 <div className="row g-4">
 
                     <div className="col-md-4">
