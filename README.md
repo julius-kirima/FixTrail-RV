@@ -115,13 +115,19 @@ The deployed API is hosted separately from the React frontend.
 ```text
 src/
 ├── components/
+│   ├── About.jsx
+│   ├── Footer.jsx
 │   ├── Header.jsx
-│   ├── Hero.jsx
-│   └── ReportFault.jsx
+│   ├── Home.jsx
+│   ├── HowItWorks.jsx
+│   ├── ReportFault.jsx
+│   ├── TrackProgress.jsx
+│   └── WhyChooseFixTrail.jsx
 ├── context/
 │   └── AppContext.jsx
 ├── pages/
 │   ├── AdminDashboard.jsx
+│   ├── LandingPage.jsx
 │   └── TrackReport.jsx
 ├── routes/
 │   └── AppRoutes.jsx
