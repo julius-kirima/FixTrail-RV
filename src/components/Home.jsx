@@ -5,6 +5,7 @@ export default function Home() {
     return (
         <main id="home" className="hero-section">
 
+            {/* Highlights the main FixTrail services through rotating slides. */}
             <div
                 id="fixTrailCarousel"
                 className="carousel slide"
@@ -14,7 +15,6 @@ export default function Home() {
 
                 <div className="carousel-inner">
 
-                    {/* First Slide */}
                     <div className="carousel-item active">
                         <img
                             src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
@@ -43,7 +43,6 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Second Slide */}
                     <div className="carousel-item">
                         <img
                             src="https://images.unsplash.com/photo-1497366754035-f200968a6e72"
@@ -73,7 +72,6 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Third Slide */}
                     <div className="carousel-item">
                         <img
                             src="https://images.unsplash.com/photo-1518770660439-4636190af475"
@@ -110,6 +108,7 @@ export default function Home() {
                     type="button"
                     data-bs-target="#fixTrailCarousel"
                     data-bs-slide="prev"
+                    aria-label="Previous slide"
                 >
                     <span className="carousel-control-prev-icon"></span>
                 </button>
@@ -119,6 +118,7 @@ export default function Home() {
                     type="button"
                     data-bs-target="#fixTrailCarousel"
                     data-bs-slide="next"
+                    aria-label="Next slide"
                 >
                     <span className="carousel-control-next-icon"></span>
                 </button>
