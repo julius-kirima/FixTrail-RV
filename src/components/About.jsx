@@ -20,6 +20,7 @@ export default function About() {
                     </div>
 
                     <div className="col-md-6">
+                        {/* Illustrates the maintenance work tracked by FixTrail. */}
                         <img
                             src="https://images.unsplash.com/photo-1581092921461-eab62e97a780"
                             alt="Technician maintaining equipment"
