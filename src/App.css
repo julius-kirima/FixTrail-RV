@@ -320,6 +320,7 @@ html {
     border: 1px solid #e5e7eb;
 }
 
+/* Keeps benefit card headings visually distinct. */
 .benefit-card h4 {
     font-weight: 600;
     margin-bottom: 15px;
@@ -330,10 +331,7 @@ html {
     line-height: 1.7;
 }
 
-
-/* HEADER NAVLINKS */
-
-
+/* Controls the header navigation layout and mobile spacing. */
 .navbar {
     padding: 15px 0;
     z-index: 1000;
