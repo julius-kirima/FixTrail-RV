@@ -1,5 +1,5 @@
 
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { useParams, Link } from 'react-router'
 import Header from '../components/Header'
 import { AppContext } from '../context/AppContext'
@@ -8,30 +8,23 @@ export default function TrackReport() {
     const { referenceNumber } = useParams()
     const { reports, loading } = useContext(AppContext)
 
-    const [report, setReport] = useState(null)
-    const [error, setError] = useState('')
+    // Match the reference number without depending on letter casing.
+    const report = reports.find(
+        (item) =>
+            item.referenceNumber?.toLowerCase() === referenceNumber?.trim().toLowerCase()
+    )
 
-    useEffect(() => {
-        if (loading) return
-
-        const foundReport = reports.find(
-            (item) => item.referenceNumber === referenceNumber
-        )
-
-        if (foundReport) {
-            setReport(foundReport)
-            setError('')
-        } else {
-            setReport(null)
-            setError('No report found with this reference number.')
-        }
-    }, [reports, loading, referenceNumber])
+    const statusClass = report?.status === 'Resolved'
+        ? 'bg-success'
+        : report?.status === 'In Progress'
+            ? 'bg-primary'
+            : 'bg-warning text-dark'
 
     return (
         <>
             <Header />
 
-            <main className="container py-15" style={{ paddingTop: '100px' }}>
+            <main className="container py-5" style={{ paddingTop: '100px' }}>
 
                 <h2>Track Your Fault Report</h2>
 
@@ -41,13 +34,13 @@ export default function TrackReport() {
 
                 {loading && <p>Loading report...</p>}
 
-                {error && (
+                {!loading && !report && (
                     <div className="alert alert-danger">
-                        {error}
+                        No report found with this reference number.
                     </div>
                 )}
 
-                {report && (
+                {!loading && report && (
                     <div className="card mt-4">
                         <div className="card-body">
                             <h4 className="card-title">{report.title}</h4>
@@ -59,14 +52,16 @@ export default function TrackReport() {
 
                             <p>
                                 <strong>Repair Status:</strong>{' '}
-                                <span className="badge bg-warning text-dark">
+                                <span className={`badge ${statusClass}`}>
                                     {report.status}
                                 </span>
                             </p>
 
                             <p>
                                 <strong>Submitted:</strong>{' '}
-                                {new Date(report.createdAt).toLocaleString()}
+                                {report.createdAt
+                                    ? new Date(report.createdAt).toLocaleString()
+                                    : 'Date unavailable'}
                             </p>
                         </div>
                     </div>
