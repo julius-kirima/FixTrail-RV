@@ -30,13 +30,32 @@ export default function ReportFault() {
     async function handleSubmit(event) {
         event.preventDefault()
         setError('')
+
+        // Remove accidental spaces before saving the report.
+        const cleanedData = Object.fromEntries(
+            Object.entries(formData).map(([key, value]) => [
+                key,
+                value.trim()
+            ])
+        )
+
+        if (Object.values(cleanedData).some(value => !value)) {
+            setError('Please complete all fields before submitting.')
+            return
+        }
+
+        if (cleanedData.description.length < 10) {
+            setError('Please provide a description of at least 10 characters.')
+            return
+        }
+
         setSubmitting(true)
 
         const referenceNumber = `FT-${Date.now()}`
 
         try {
             await addReport({
-                ...formData,
+                ...cleanedData,
                 referenceNumber,
                 status: 'Pending',
                 createdAt: new Date().toISOString()
@@ -77,8 +96,9 @@ export default function ReportFault() {
 
                         <form onSubmit={handleSubmit}>
                             <div className="mb-3">
-                                <label className="form-label">Full Name</label>
+                                <label htmlFor="fullName" className="form-label">Full Name</label>
                                 <input
+                                    id="fullName"
                                     type="text"
                                     name="fullName"
                                     className="form-control"
@@ -89,8 +109,9 @@ export default function ReportFault() {
                             </div>
 
                             <div className="mb-3">
-                                <label className="form-label">Fault Title</label>
+                                <label htmlFor="title" className="form-label">Fault Title</label>
                                 <input
+                                    id="title"
                                     type="text"
                                     name="title"
                                     className="form-control"
@@ -101,8 +122,9 @@ export default function ReportFault() {
                             </div>
 
                             <div className="mb-3">
-                                <label className="form-label">Category</label>
+                                <label htmlFor="category" className="form-label">Category</label>
                                 <select
+                                    id="category"
                                     name="category"
                                     className="form-select"
                                     value={formData.category}
@@ -120,8 +142,9 @@ export default function ReportFault() {
                             </div>
 
                             <div className="mb-3">
-                                <label className="form-label">Location or Equipment ID</label>
+                                <label htmlFor="location" className="form-label">Location or Equipment ID</label>
                                 <input
+                                    id="location"
                                     type="text"
                                     name="location"
                                     className="form-control"
@@ -132,8 +155,9 @@ export default function ReportFault() {
                             </div>
 
                             <div className="mb-3">
-                                <label className="form-label">Fault Description</label>
+                                <label htmlFor="description" className="form-label">Fault Description</label>
                                 <textarea
+                                    id="description"
                                     name="description"
                                     className="form-control"
                                     rows="4"
@@ -144,7 +168,7 @@ export default function ReportFault() {
                             </div>
 
                             {error && (
-                                <p className="text-danger">{error}</p>
+                                <p className="text-danger" role="alert">{error}</p>
                             )}
 
                             <button
